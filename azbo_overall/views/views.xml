@@ -1,0 +1,75 @@
+<odoo>
+    <data>
+
+        <record id="view_mrp_bom_form_inherit" model="ir.ui.view">
+            <field name="name">mrp.bom.form.inherit</field>
+            <field name="inherit_id" ref="mrp.mrp_bom_form_view"/>
+            <field name="model">mrp.bom</field>
+            <field type="xml" name="arch">
+                <xpath expr="//sheet" position="before">
+                    <header>
+                        <button id="id_button_create_sample"
+                                name="button_create_sample_open_wizard"
+                                string="Sample Order"
+                                class="btn-primary"
+                                type="object"
+                                attrs="{'invisible':['|', ('is_sample_order','=',False),('company_id', '!=', 9)]}"
+                        />
+                        <button id="id_button_create_sale"
+                                name="button_create_sale"
+                                string="Sale Order"
+                                class="btn-primary"
+                                type="object"
+                                attrs="{'invisible':['|', ('is_sample_order','=',False),('company_id', '!=', 9)]}"
+                        />
+                    </header>
+                </xpath>
+
+                <xpath expr="//sheet/div[@name='button_box']" position="inside">
+                    <button class="oe_stat_button"
+                            icon="fa-wrench"
+                            type="object"
+                            name="action_sale_order_view"
+                            attrs="{'invisible': [('company_id', '!=', 9)]}">
+                        <field string="SO's" name="sale_count" widget="statinfo" />
+                    </button>
+                    <button class="oe_stat_button"
+                            icon="fa-wrench"
+                            type="object"
+                            name="action_mo_order_view"
+                            attrs="{'invisible': [('company_id', '!=', 9)]}">
+                        <field string="MO's" name="mo_count" widget="statinfo" />
+                    </button>
+                </xpath>
+
+                <xpath expr="//group[1]/group[1]/div" position="after">
+                    <field name="is_sample_order" attrs="{'invisible': [('company_id', '!=', 9)]}"/>
+                    <field name="lead_id"/>
+                </xpath>
+            </field>
+        </record>
+
+<!--        <record id="view_sale_order_form_inherit" model="ir.ui.view">-->
+<!--            <field name="name">sale.order.inherit</field>-->
+<!--            <field name="model">sale.order</field>-->
+<!--            <field name="inherit_id" ref="sale.view_order_form"/>-->
+<!--            <field type="xml" name="arch">-->
+<!--                <xpath expr="//field[@name='partner_shipping_id']" position="after">-->
+<!--                    <field name="bom_id" readonly="1" attrs="{'invisible': [('company_id', '!=', 9)]}"/>-->
+<!--                </xpath>-->
+<!--            </field>-->
+<!--        </record>-->
+
+<!--        <record id="view_stock_picking_form_inherit" model="ir.ui.view">-->
+<!--            <field name="name">stock.picking.inherit</field>-->
+<!--            <field name="model">stock.picking</field>-->
+<!--            <field name="inherit_id" ref="stock.view_picking_form"/>-->
+<!--            <field type="xml" name="arch">-->
+<!--                <xpath expr="//field[@name='origin']" position="attributes">-->
+<!--                    <attribute name="invisible">0</attribute>-->
+<!--                </xpath>-->
+<!--            </field>-->
+<!--        </record>-->
+
+    </data>
+</odoo>

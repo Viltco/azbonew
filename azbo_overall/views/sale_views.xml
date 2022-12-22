@@ -1,0 +1,48 @@
+<odoo>
+
+    <record id="view_sale_order_form_inherit" model="ir.ui.view">
+        <field name="name">view.sale.order.form.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//sheet/div[@name='button_box']" position="inside">
+                <button class="oe_stat_button"
+                        icon="fa-wrench"
+                        type="object"
+                        name="action_req_view"
+                        attrs="{'invisible': [('company_id', '!=', 9)]}">
+                    <field string="REQ's" name="req_count" widget="statinfo"/>
+                </button>
+                <button class="oe_stat_button"
+                        icon="fa-wrench"
+                        type="object"
+                        name="action_mo_order_view"
+                        attrs="{'invisible': [('company_id', '!=', 9)]}">
+                    <field string="MO's" name="mo_count" widget="statinfo"/>
+                </button>
+            </xpath>
+
+            <xpath expr="//header/button[@name='action_draft']" position="after">
+                <button name="button_create_mo"
+                        type="object"
+                        string="Create MO"
+                        class="oe_highlight"
+                        attrs="{'invisible':['|', ('state','!=','sale'),('company_id', '!=', 9)]}"
+                />
+                <button name="button_create_requisition"
+                        type="object"
+                        string="Create Requisition"
+                        class="oe_highlight"
+                        attrs="{'invisible':['|', ('state','!=','sale'),('company_id', '!=', 9)]}"
+                />
+            </xpath>
+
+            <xpath expr="//field[@name='partner_shipping_id']" position="after">
+                <field name="bom_id"  attrs="{'invisible': [('company_id', '!=', 9)]}"/>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

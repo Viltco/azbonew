@@ -1,0 +1,15 @@
+<odoo>
+
+    <record id="view_account_asset_form_inherit" model="ir.ui.view">
+        <field name="name">account.asset.form.inherit</field>
+        <field name="inherit_id" ref="account_asset.view_account_asset_form"/>
+        <field name="model">account.asset</field>
+        <field type="xml" name="arch">
+            <xpath expr="//field[@name='first_depreciation_date']" position="after">
+                <field name="employee_id" attrs="{'invisible': [('company_id', '!=', 1)]}"/>
+                <field name="department_id" attrs="{'invisible': [('company_id', '!=', 1)]}"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

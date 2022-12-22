@@ -1,0 +1,120 @@
+<odoo>
+
+    <record model="ir.ui.menu" id="crm.crm_menu_leads">
+        <field name="name">Inquiry</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="crm.crm_lead_all_leads">
+        <field name="name">Inquiry</field>
+        <field name="res_model">crm.lead</field>
+        <field name="view_mode">graph,tree,kanban,pivot,calendar,form,activity</field>
+        <field name="domain">['|', ('type','=','lead'), ('type','=',False)]</field>
+        <field name="search_view_id" ref="crm.view_crm_case_leads_filter"/>
+        <field name="context">{
+            'default_type':'lead',
+            'search_default_type': 'lead',
+            'search_default_to_process':1}
+        </field>
+    </record>
+
+    <record id="view_crm_lead_form_inherit" model="ir.ui.view">
+        <field name="name">crm.lead.form.inherit</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//sheet/div[@name='button_box']" position="inside">
+                <button class="oe_stat_button"
+                        icon="fa-wrench"
+                        type="object"
+                        name="action_pre_order_cost_sheet"
+                        attrs="{'invisible': [('company_id', '!=', 9)]}">
+                    <field string="Pre Order Cost Sheet" name="bom_count" widget="statinfo"/>
+                </button>
+            </xpath>
+
+            <xpath expr="//button[@name='action_set_lost']" position="after">
+                <button name="action_order_cost_sheet"
+                        string="PRE ORDER COST SHEET"
+                        type="object"
+                        class="oe_highlight"
+                        attrs="{'invisible':[('type', 'not in', ['opportunity'])]}"
+                />
+            </xpath>
+
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="x_css" invisible="1"/>
+                <field name="y_css" invisible="1"/>
+            </xpath>
+
+            <xpath expr="//label[@for='name']" position="attributes">
+                <attribute name="string">Inquiry</attribute>
+            </xpath>
+
+        </field>
+    </record>
+
+    <record id="view_crm_lead_tree_inherit" model="ir.ui.view">
+        <field name="name">crm.lead.tree.inherit</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_case_tree_view_leads"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='user_id']" position="after">
+                <field name="x_css" nolabel="1"/>
+                <field name="y_css" nolabel="1"/>
+            </xpath>
+
+        </field>
+    </record>
+
+    <record id="view_crm_lead_kanban_inherit" model="ir.ui.view">
+        <field name="name">crm.lead.kanban.inherit</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_case_kanban_view_leads"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='user_id']" position="after">
+                <field name="x_css" nolabel="1"/>
+                <field name="y_css" nolabel="1"/>
+            </xpath>
+
+        </field>
+    </record>
+
+    <record id="view_crm_oppor_tree_inherit" model="ir.ui.view">
+        <field name="name">crm.lead.oppor.tree.inherit</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_case_tree_view_oppor"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='user_id']" position="after">
+                <field name="x_css" nolabel="1"/>
+                <field name="y_css" nolabel="1"/>
+            </xpath>
+
+        </field>
+    </record>
+
+    <record id="view_sale_crm_lead_form_inherit" model="ir.ui.view">
+        <field name="name">sale.crm.lead.form.inherit</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="sale_crm.crm_case_form_view_oppor"/>
+        <field name="arch" type="xml">
+
+            <!--            <xpath expr="//button[@name='action_sale_quotations_new']" position="attributes">-->
+            <!--                <attribute name="attrs">{'invisible': [('is_hide_quotation', '=', True)]}</attribute>-->
+            <!--            </xpath>-->
+
+            <xpath expr="//button[@name='action_sale_quotations_new']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
+            <xpath expr="//button[@name='action_view_sale_quotation']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

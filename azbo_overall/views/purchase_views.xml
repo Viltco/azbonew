@@ -1,0 +1,42 @@
+<odoo>
+
+    <record id="view_purchase_order_form_inherit" model="ir.ui.view">
+        <field name="name">purchase.order.form.inherit</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//header/button[@name='action_rfq_send']" position="after">
+                <button name="button_approved"
+                        type="object"
+                        states="approve"
+                        string="Approve"
+                        class="oe_highlight"
+                        groups="azbo_overall.group_po_approve"
+                />
+            </xpath>
+
+            <xpath expr="//header//button[@name='button_confirm']" position="after">
+                <button name="action_reset"
+                        type="object"
+                        states="to_review"
+                        string="Reset"
+                        class="oe_highlight"
+                />
+                <button name="button_reject"
+                        type="object"
+                        states="approve"
+                        string="Reject"
+                        class="oe_highlight"
+                        groups="azbo_overall.group_po_reject"
+                />
+            </xpath>
+
+            <xpath expr="//field[@name='amount_total']" position="after">
+                <field name="total_quantity"/>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>
