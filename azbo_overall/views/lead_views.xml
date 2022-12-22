@@ -28,7 +28,7 @@
                         icon="fa-wrench"
                         type="object"
                         name="action_pre_order_cost_sheet"
-                        attrs="{'invisible': [('company_id', '!=', 9)]}">
+                        attrs="{'invisible': [('company_id', '!=', 1)]}">
                     <field string="Pre Order Cost Sheet" name="bom_count" widget="statinfo"/>
                 </button>
             </xpath>
@@ -63,6 +63,10 @@
             <xpath expr="//field[@name='user_id']" position="after">
                 <field name="x_css" nolabel="1"/>
                 <field name="y_css" nolabel="1"/>
+            </xpath>
+
+            <xpath expr="//field[@name='name']" position="attributes">
+                <attribute name="string">Inquiry</attribute>
             </xpath>
 
         </field>

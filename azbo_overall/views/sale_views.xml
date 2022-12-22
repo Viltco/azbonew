@@ -1,5 +1,16 @@
 <odoo>
 
+    <record id="view_sale_order_tree_inherit" model="ir.ui.view">
+        <field name="name">sale.order.tree.inherit</field>
+        <field name="inherit_id" ref="sale.view_order_tree"/>
+        <field name="model">sale.order</field>
+        <field type="xml" name="arch">
+            <xpath expr="//field[@name='invoice_status']" position="after">
+                <field name="state" optional="show"/>
+            </xpath>
+        </field>
+    </record>
+
     <record id="view_sale_order_form_inherit" model="ir.ui.view">
         <field name="name">view.sale.order.form.inherit</field>
         <field name="model">sale.order</field>
@@ -11,14 +22,14 @@
                         icon="fa-wrench"
                         type="object"
                         name="action_req_view"
-                        attrs="{'invisible': [('company_id', '!=', 9)]}">
+                        attrs="{'invisible': ['|',('company_id', '!=', 1),('req_count', '=', 0)]}">
                     <field string="REQ's" name="req_count" widget="statinfo"/>
                 </button>
                 <button class="oe_stat_button"
                         icon="fa-wrench"
                         type="object"
                         name="action_mo_order_view"
-                        attrs="{'invisible': [('company_id', '!=', 9)]}">
+                        attrs="{'invisible': ['|',('company_id', '!=', 1),('mo_count', '=', 0)]}">
                     <field string="MO's" name="mo_count" widget="statinfo"/>
                 </button>
             </xpath>
@@ -28,18 +39,20 @@
                         type="object"
                         string="Create MO"
                         class="oe_highlight"
-                        attrs="{'invisible':['|', ('state','!=','sale'),('company_id', '!=', 9)]}"
+                        attrs="{'invisible':['|', '|',('state','!=','sale'),('company_id', '!=', 1),('is_mo_created', '!=', False)]}"
                 />
                 <button name="button_create_requisition"
                         type="object"
                         string="Create Requisition"
                         class="oe_highlight"
-                        attrs="{'invisible':['|', ('state','!=','sale'),('company_id', '!=', 9)]}"
+                        attrs="{'invisible':['|', '|',('state','!=','sale'),('company_id', '!=', 1),('is_req_created', '!=', False)]}"
                 />
             </xpath>
 
             <xpath expr="//field[@name='partner_shipping_id']" position="after">
-                <field name="bom_id"  attrs="{'invisible': [('company_id', '!=', 9)]}"/>
+                <field name="bom_id"  attrs="{'invisible': [('company_id', '!=', 1)]}"/>
+                <field name="is_mo_created" invisible="1"/>
+                <field name="is_req_created" invisible="1"/>
             </xpath>
 
         </field>

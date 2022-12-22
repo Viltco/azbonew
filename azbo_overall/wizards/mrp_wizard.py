@@ -54,6 +54,7 @@ class MRPWizard(models.TransientModel):
         mrp._onchange_producing()
         # mrp._onchange_workorder_ids()
         # self.show_create_mo = False
+        self.bom_id.is_press_sample = True
 
     # def action_create_mo(self):
     #     line_val = []

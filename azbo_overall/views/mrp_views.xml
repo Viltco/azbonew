@@ -5,9 +5,56 @@
         <field name="model">mrp.production</field>
         <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
         <field type="xml" name="arch">
+            <xpath expr="//sheet/div[@name='button_box']" position="inside">
+                <button class="oe_stat_button"
+                        icon="fa-wrench"
+                        type="object"
+                        name="action_transfer_view"
+                        attrs="{'invisible': [('company_id', '!=', 1)]}">
+                    <field string="Transfers" name="picking_count" widget="statinfo"/>
+                </button>
+                <button class="oe_stat_button"
+                        icon="fa-wrench"
+                        type="object"
+                        name="action_move_entry_view"
+                        attrs="{'invisible': [('company_id', '!=', 1)]}">
+                    <field string="Journal Entries" name="move_entry_count" widget="statinfo"/>
+                </button>
+            </xpath>
             <xpath expr="//field[@name='company_id']" position="after">
-<!--                <field name="wizard_bom_id" readonly="1" attrs="{'invisible': [('company_id', '!=', 9)]}"/>-->
-                <field name="so_id" readonly="1" attrs="{'invisible': [('company_id', '!=', 9)]}"/>
+                <!--                <field name="wizard_bom_id" readonly="1" attrs="{'invisible': [('company_id', '!=', 9)]}"/>-->
+                <field name="so_id" readonly="1" attrs="{'invisible': [('company_id', '!=', 1)]}"/>
+            </xpath>
+            <xpath expr="//header/button[@name='action_assign']" position="before">
+                <button name="action_general_entry" type="object" string="Create JV" invisible="1"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_mrp_work_center_form_inherit" model="ir.ui.view">
+        <field name="name">mrp.work.center.inherit</field>
+        <field name="model">mrp.workcenter</field>
+        <field name="inherit_id" ref="mrp.mrp_workcenter_view"/>
+        <field type="xml" name="arch">
+            <xpath expr="//field[@name='company_id']" position="after">
+                <field name="analytic_account_id"/>
+                <field name="is_outsource"/>
+            </xpath>
+            <xpath expr="//notebook/page[1]" position="after">
+                <page string="OutSourcing" attrs="{'invisible': [('is_outsource', '=', False)]}">
+                    <group>
+                        <group>
+                            <field name="picking_type_id"/>
+                            <field name="location_src_id"/>
+                            <field name="location_dest_id"/>
+                        </group>
+                        <group>
+                            <field name="account_outstanding_id"/>
+                            <field name="account_intermediary_id"/>
+                            <field name="journal_id"/>
+                        </group>
+                    </group>
+                </page>
             </xpath>
         </field>
     </record>

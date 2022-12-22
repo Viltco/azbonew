@@ -20,6 +20,9 @@ class BOMInh(models.Model):
 
     is_sample_order = fields.Boolean('Sample Order')
 
+    is_press_sample = fields.Boolean('Is Press Sample')
+    is_press_sale = fields.Boolean('Is Press Sale')
+
     sale_count = fields.Integer(compute='get_sale_count')
     mo_count = fields.Integer(compute='get_mo_count')
 
@@ -49,6 +52,7 @@ class BOMInh(models.Model):
             'partner_id': self.company_id.partner_id.id,
             'order_line': line_val,
         })
+        self.is_press_sale = True
 
     # def button_create_sale(self):
     #     line_val = []
